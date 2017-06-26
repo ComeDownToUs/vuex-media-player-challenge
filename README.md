@@ -1,14 +1,15 @@
 To run api
-`cd api`
-`npm install`
-`npm start`
+```cd api
+npm install
+npm start```
 
 To run SPA
-`cd media-player`
-`npm install`
-`npm run dev`
+```cd media-player
+npm install
+npm run dev```
 
 Built using Vue-Cli, Bootstrap and a repurposed API from elsewhere with the data from the provided server.
+
 Data on the API is not written to anywhere so when you terminate the server, any data you've assigned is lost.
 
 Tests and automation all set up by the cli, read media-player/README.md for the vue-cli options
@@ -45,8 +46,11 @@ Tests and automation all set up by the cli, read media-player/README.md for the 
 
 ### Approach
 I pretty much immediately decided to use vue-cli and vuex as it would get most of the setup out of the way (tests, webpack, hot reloading, editorconfig, eslint, etc) as this is really quite a long task. 
+
 Following that I mapped out approaches to handle the state with vuex, I didn't really take into account just how awkward this would be with the player iterating through the time. This was mostly coming from the data in the provided server. Further benefits of Vuex for a project such as this have been mentioned elsewhere in my details.
+
 Next I played around with the provided server. Wasn't very keen on it, it was writing post requests completely differently to the existing layout, ommitting aspects and the documentation didn't really explain whether this was intentional or not. As my logic was based around the existing server I decided I would just use the existing data with some tweaks in another server.
+
 ...and then I built it? Firstly the tracklist component and player, then routing, then a hodge podge of other parts
 
 ### Design goals
