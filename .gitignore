@@ -1,0 +1,11 @@
+.DS_Store
+api/node_modules/
+api/npm-debug.log*
+media-player/node_modules
+media-player/dist/
+media-player/npm-debug.log*
+media-player/yarn-debug.log*
+media-player/yarn-error.log*
+media-player/test/unit/coverage
+media-player/test/e2e/reports
+media-player/selenium-debug.log
