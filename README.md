@@ -1,12 +1,18 @@
 To run api
-```cd api
-npm install
-npm start```
+
+```
+  cd api
+  npm install
+  npm start
+```
 
 To run SPA
-```cd media-player
-npm install
-npm run dev```
+
+```
+  cd media-player
+  npm install
+  npm run dev
+```
 
 Built using Vue-Cli, Bootstrap and a repurposed API from elsewhere with the data from the provided server.
 
