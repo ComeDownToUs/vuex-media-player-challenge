@@ -16,6 +16,7 @@ export const ADD_TO_NOW_PLAYING = 'presenter/ADD_TO_NOW_PLAYING';
 
 // Playback specific
 export const PLAY_NEW_TRACK = 'playback/PLAY_NEW_TRACK';
+export const CHANGE_PLAY_STATUS = 'playback/CHANGE_PLAY_STATUS';
 export const CHANGE_TRACK = 'playback/CHANGE_TRACK';
 export const TOGGLE_PLAY = 'playback/TOGGLE_PLAY';
 export const TOGGLE_MUTE = 'playback/TOGGLE_MUTE';

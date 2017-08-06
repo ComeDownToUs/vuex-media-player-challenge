@@ -2,12 +2,12 @@
   <div>
     <div class="container track-list heading">
       <div class="row track heading">
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-xs-4">
           <a class='track-sorter sort-artist' v-on:click.prevent.stop="sortTracks('artist')">
             Artist
           </a>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-xs-4">
           <a class='track-sorter sort-track' v-on:click.prevent.stop="sortTracks('track')">
             Track
           </a>
@@ -17,7 +17,7 @@
             Genre
           </a>
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-1 col-xs-4">
           <a  class='track-sorter sort-duration' v-on:click.prevent.stop="sortTracks('duration')">
             Duration
           </a>

@@ -15,6 +15,7 @@ import {
 
   PLAY_NEW_TRACK,
   CHANGE_TRACK,
+  CHANGE_PLAY_STATUS,
   TOGGLE_PLAY,
   TOGGLE_REPEAT,
   TOGGLE_MUTE,
@@ -132,9 +133,15 @@ export function addToNowPlaying({ commit, state }, track) {
 
 // Playback Actions
 export function playNewTrack({ commit, state }, newTrackList) {
+  commit(CHANGE_PLAY_STATUS, 'newTrack');
   commit(PLAY_NEW_TRACK, newTrackList);
+  commit(TOGGLE_PLAY, true);
+}
+export function changePlayStatus({ commit }, status) {
+  commit(CHANGE_PLAY_STATUS, status);
 }
 export function changeTrack({ commit }, change = 1) {
+  commit(CHANGE_PLAY_STATUS, 'newTrack');
   commit(CHANGE_TRACK, change);
 }
 export function togglePlay({ commit }, playSwitch) {

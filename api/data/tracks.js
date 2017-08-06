@@ -71,9 +71,9 @@ module.exports = {
       "artwork_url": "http://is3.mzstatic.com/image/thumb/Music/v4/98/10/bd/9810bd86-9023-fb20-c6d8-d15e6a25222e/source/100x100bb.jpg",
       "duration": 4,
       "track_path": "http://www.stephaniequinn.com/Music/Canon.mp3",
-      "title": "So short, so short",
+      "title": "So so short",
       "genre": "Rock",
       "rating": false,
-      "id": "ffc4db7a-56f0-11e7-907b-a6006ad3dba0"
+      "id": "c148187d-a258-41cf-87a9-c2c74ba0f50a"
     }
 }
