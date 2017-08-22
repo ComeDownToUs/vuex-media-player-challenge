@@ -9,3 +9,4 @@ media-player/yarn-error.log*
 media-player/test/unit/coverage
 media-player/test/e2e/reports
 media-player/selenium-debug.log
+npm-debug.log
