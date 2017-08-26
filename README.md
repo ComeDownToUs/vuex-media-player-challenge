@@ -1,3 +1,6 @@
+[original submitted version for time restricted coding challenge is available on its own branch]
+
+
 To run api
 
 ```
@@ -24,20 +27,22 @@ Tests and automation all set up by the cli, read media-player/README.md for the 
 
 ### Working:
   - list of songs, all retrieved from server at once
-  - play pause button
+  - play/pause button
   - next song, previous song (loops back/forward at beginning and end)
   - rate song, works and applies to server only included like/unlike, 1-5 could be easily done but it's not a good choice for the task at hand
   - when a song ends, the next one starts
+  - time slider (although requires optimisation)
+  - play operatons (likely buggy, underlying code ready for rewinding and fast-forwarding)
 
 ### Not working:
-  - Playlist operations (limited functionality, can add to and save current playlist)
   - Sorting and filtering (both quite easy to add, I would imagine, but I dont know vue well enough)
-  - slider for time (no time), include a duration display
+  - Now Playing viewer, 
 
 ### Not working well:
-  - play operations are pretty hacky and broken (playing and pausing are exclusively handled by the button at the bottom of the screen because the current solution messes up if you were to play by clicking the play button in the track listing)
-  - playlists are missing many common key features
+  - playlists are missing many common key features that should be easily added now
   - the actual CSS is a mess but mostly scoped within the individual components, focus was on getting the operations running and I can make a nice stylesheet later if I want
+  - there's some issue with the TrackList displayer at the moment, it tries to run it before the playlist is able to be loaded at some points
+  - layout tweaks for iPhone 5/SE
 
 ### Extra features:
   - volume toggle (updates state)
@@ -75,6 +80,7 @@ Next I played around with the provided server. Wasn't very keen on it, it was wr
   - uuid is used to generate new IDs, I changed the database around a bit to be able to refer to items by their IDs more easily
   - Bootstrap 3 was used due to (1) extensive experience with it and (2) very quickly implemented responsive layout
   - Axios was used to handle the few API requests I made, no particular reason over any other one
+  - vue-slider-component handles the slider operations
 
 ### Attempts at Clean Code
   - Using Vuex to enfore an ordered approach to operations
@@ -90,7 +96,6 @@ Next I played around with the provided server. Wasn't very keen on it, it was wr
 
 ### Todos
   - Resolve testing issues
-  - improve playing operation
   - sort trackList table
   - filter trackList table
   - now playing display modal

@@ -2,6 +2,16 @@
   <div class="small-player">
     <div class="container">
     <div class="row nowplaying-active" v-if="nowPlaying.currentTracks.length > 0" >
+      <vue-slider
+        ref="slider"
+        :max="tracks[playIndex].duration"
+        :value="0"
+        :tooltip="'hover'"
+        :clickable="true"
+        :real-time="true"
+        :speed="1"
+        v-model="timePlace">
+      </vue-slider>
       <div
         class="col-xs-2 col-sm-1 album-art vcentered-by-padding"
         v-bind:style="`background-image: url(` +
@@ -15,12 +25,12 @@
         {{nowPlaying.currentTracks[nowPlaying.currentIndex].genre}}
       </div>
       <div class="col-sm-2 col-xs-3 col-md-1 vcentered-by-padding text-right player-duration">
-        {{timeDisplay(nowPlaying.position)}} /
+        {{timeDisplay(timePlace)}} /
         {{timeDisplay(nowPlaying.currentTracks[nowPlaying.currentIndex].duration)}}<br/>
         {{nowPlaying.currentIndex + 1}} of {{nowPlaying.currentTracks.length}}
       </div>
       <div class="col-md-offset-1 col-sm-5 col-md-5 col-lg-3 col-xs-12 text-center">
-        <div class="playercontrols row">
+        <div class="player-controls row">
           <div class='col-md-1 hidden-sm hidden-xs'>
             <button v-on:click.prevent.stop="saveNowPlaying(nowPlaying)"
               :class="((nowPlaying.saved) ? 'disabled':'enabled') + 'player-save'"
@@ -40,7 +50,7 @@
           </div>
           <div class="col-xs-2">
             <button v-on:click.prevent.stop="changeTrack(-1)"
-              class="player-back">
+              class="player-back pull-right">
               <span class="control-button glyphicon glyphicon-fast-backward"></span>
             </button>
           </div>
@@ -55,7 +65,7 @@
           </div>
           <div class="col-xs-2">
             <button v-on:click.prevent.stop="changeTrack(1)"
-              class="player-forward">
+              class="player-forward pull-left">
               <span class="control-button glyphicon glyphicon-fast-forward"></span>
             </button>
           </div>
@@ -93,30 +103,64 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import vueSlider from 'vue-slider-component';
 import { timeMixin } from '../mixins/time';
 
 export default {
   name: 'SmallPlayer',
   mixins: [timeMixin],
+  components: {
+    vueSlider,
+  },
   computed: mapGetters({
     nowPlaying: 'getNowPlaying',
+    tracks: 'getCurrentTracks',
+    playIndex: 'getCurrentPlayIndex',
   }),
   methods: {
     ...mapActions([
       'togglePlay',
       'changeTrack',
+      'changePlayStatus',
       'toggleMute',
       'toggleRepeat',
       'saveNowPlaying',
     ]),
-    updatePosition() {
-      this.currentTrack.position = this.currentTrack.position + 1;
+    updatePlaytime() {
+      if (this.nowPlaying.playStatus === 'newTrack') {
+        this.timePlace = 0;
+        this.changePlayStatus('playing');
+      }
+      if (this.nowPlaying.isPlaying) {
+        const newTime = this.timePlace + this.nowPlaying.playSpeed;
+        if (newTime < 0) {
+          alert('rewind functionality not fully figure out yet');
+          this.timePlace = 0;
+          this.togglePlay();
+        } else if (newTime > this.tracks[this.playIndex].duration) {
+          this.timePlace = 0;
+          if (!this.nowPlaying.repeat) {
+            if ((this.playIndex + 1) < this.tracks.length) {
+              this.changeTrack();
+            } else {
+              this.togglePlay();
+            }
+          }
+        } else if (newTime <= this.tracks[this.playIndex].duration) {
+          console.log('playing regularly');
+          this.timePlace = newTime;
+        }
+      }
     },
   },
   data() {
     return {
       msg: 'Welcome to Your Vue.js App',
+      timePlace: 0,
     };
+  },
+  mounted() {
+    setInterval(this.updatePlaytime, 1000);
   },
 };
 </script>

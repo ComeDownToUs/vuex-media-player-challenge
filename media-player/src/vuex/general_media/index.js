@@ -14,11 +14,11 @@ import {
   BUILD_NOW_PLAYING,
 
   PLAY_NEW_TRACK,
+  CHANGE_PLAY_STATUS,
   CHANGE_TRACK,
   TOGGLE_PLAY,
   TOGGLE_MUTE,
   TOGGLE_REPEAT,
-  UPDATE_PLAYTIME,
 
   ACTION_ERROR,
 } from './mutations';
@@ -29,41 +29,18 @@ const initialState = {
   nowPlaying: {
     currentTracks: [],
     currentIndex: 0,
-    position: 0,
+    playSpeed: 1,
     isPlaying: false,
     isLoading: false,
     mute: false,
     repeat: false,
     saved: false,
+    playStatus: 'newTrack',
   },
   error: '',
   isFetching: false,
 };
 
-/* eslint-disable */
-function updatePlaytime (nowPlaying) {
-  // <<TODO>> Switch statement?
-  if (nowPlaying.isPlaying) {
-    if (nowPlaying.position <= nowPlaying.currentTracks[nowPlaying.currentIndex].duration) {
-      setTimeout(function(){
-        nowPlaying.position += 1;
-        updatePlaytime(nowPlaying);
-      }, 1000);
-    } else if (nowPlaying.repeat){
-      nowPlaying.position = 0;
-      updatePlaytime(nowPlaying);
-    }else if ((nowPlaying.currentIndex + 1) < nowPlaying.currentTracks.length) {
-      nowPlaying.currentIndex += 1;
-      nowPlaying.position = 0;
-      updatePlaytime(nowPlaying)
-    } else {
-      nowPlaying.isPlaying = false;
-      nowPlaying.currentIndex = 0;
-      nowPlaying.position = 0;
-    }
-  }
-}
-/* eslint-enable */
 
 /* eslint-disable no-param-reassign */
 
@@ -107,11 +84,14 @@ const mutations = {
     state.nowPlaying.currentIndex = tracklist.index;
     state.nowPlaying.position = 0;
     state.nowPlaying.isPlaying = false;
-    updatePlaytime(state.nowPlaying);
+    state.nowPlaying.playStatus = 'newTrack';
+  },
+  [CHANGE_PLAY_STATUS](state, status) {
+    state.nowPlaying.playStatus = status;
   },
   [CHANGE_TRACK](state, change) {
     if (change === 1) {
-      if (state.nowPlaying.currentIndex === state.nowPlaying.currentTracks.length) {
+      if (state.nowPlaying.currentIndex === state.nowPlaying.currentTracks.length - 1) {
         state.nowPlaying.currentIndex = 0;
       } else {
         state.nowPlaying.currentIndex += 1;
@@ -127,18 +107,12 @@ const mutations = {
   },
   [TOGGLE_PLAY](state, playStatus) {
     state.nowPlaying.isPlaying = playStatus;
-    if (playStatus) {
-      updatePlaytime(state.nowPlaying);
-    }
   },
   [TOGGLE_MUTE](state, muteStatus) {
     state.nowPlaying.mute = muteStatus;
   },
   [TOGGLE_REPEAT](state, repeatStatus) {
     state.nowPlaying.repeat = repeatStatus;
-  },
-  [UPDATE_PLAYTIME](state) {
-    updatePlaytime(state.nowPlaying);
   },
 
   [ACTION_ERROR](state, message) {
